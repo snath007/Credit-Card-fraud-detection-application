@@ -13,3 +13,4 @@ flask3.py : This file contains the code which first imports the serialized objec
 
 UI.html: This file is the frontend html page which acts as an interface to the user where the input parameters are taken and the predicted result is displayed.
 
+The dataset can be downloaded from kaggle site
