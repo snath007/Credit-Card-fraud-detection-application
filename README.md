@@ -1,0 +1,2 @@
+# Credit-Card-fraud-detection-application
+The intention of this project is to build a simple API that is in the form of a web application which will predict whether a particular credit card transaction is fraud or non fraud. The UI takes various parameters from the user such as time of transaction, amount and various other unnamed parameters which are not disclosed because of security reasons. There is an additional feature of this application which sends an automated mail to the concerned user if the transaction was a fraud or non fraud one. 
