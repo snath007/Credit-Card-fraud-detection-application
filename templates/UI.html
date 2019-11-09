@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <style>
+  #login{
+  background:blue
+  }
+  </style>
+  <title>ML API</title>
+</head>
+
+<body onload="sambit()">
+ <div class="login" id="login">
+	<h1>Credit_card_fraud_detection</h1>
+
+     <!-- Getting the inputs from the user for predicting the outcome -->
+    <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="Time" placeholder="Time"required" />
+        <input type="text" name="V1" placeholder="V1" required="required" />
+	<input type="text" name="V2" placeholder="V2" required="required" />
+	<input type="text" name="V3" placeholder="V3" required="required" />
+	<input type="text" name="V4" placeholder="V4" required="required" />
+	<input type="text" name="V5" placeholder="V5" required="required" />
+	<input type="text" name="V6" placeholder="V6" required="required" />
+	<input type="text" name="V7" placeholder="V7" required="required" />
+	<input type="text" name="V8" placeholder="V8" required="required" />
+	<input type="text" name="V9" placeholder="V9" required="required" />
+	<input type="text" name="V10" placeholder="V10" required="required" />
+	<input type="text" name="V11" placeholder="V11" required="required" />
+	<input type="text" name="V12" placeholder="V12" required="required" />
+	<input type="text" name="V13" placeholder="V13" required="required" />
+	<input type="text" name="V14" placeholder="V14" required="required" />
+	<input type="text" name="V15" placeholder="V15" required="required" />
+	<input type="text" name="V16" placeholder="V16" required="required" />
+	<input type="text" name="V17" placeholder="V17" required="required" />
+	<input type="text" name="V18" placeholder="V18" required="required" />
+	<input type="text" name="V19" placeholder="V19" required="required" />
+	<input type="text" name="V20" placeholder="V20" required="required" />
+	<input type="text" name="V21" placeholder="V21" required="required" />
+	<input type="text" name="V22" placeholder="V22" required="required" />
+	<input type="text" name="V23" placeholder="V23" required="required" />
+	<input type="text" name="V24" placeholder="V24" required="required" />
+	<input type="text" name="V25" placeholder="V25" required="required" />
+	<input type="text" name="V26" placeholder="V26" required="required" />
+	<input type="text" name="V27" placeholder="V27" required="required" />
+	<input type="text" name="V28" placeholder="V28" required="required" />
+	<input type="text" name="Amount" placeholder="Amount" required="required" />
+
+        <button type="submit" class="btn btn-primary btn-block btn-large" >Predict</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction }}
+
+ </div>
+ 
+ <div><h5>By Sambit Nath<h5></div>
+
+</body>
+</html>
