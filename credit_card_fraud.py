@@ -19,6 +19,7 @@ import scipy.stats as stats
 #importing the dataset
 
 df = pd.read_csv('C:/Users/ASUS/Desktop/creditcard.csv')
+df = df.drop('Time', axis = 1)
 
 df.columns
 df.shape
@@ -79,7 +80,7 @@ print("After OverSampling, counts of label '1': ", (sum(traintarget_smoted == 1)
 train_smoted_df = pd.DataFrame(train_smoted, columns = X_train.columns)
 print(train_smoted_df.head())
 train_target_cols = []
-train_target_cols.append(df.columns[30])
+train_target_cols.append(df.columns[29])
 traintarget_smoted_df = pd.DataFrame(traintarget_smoted, columns = train_target_cols)
 print(traintarget_smoted_df.head())
 
@@ -178,7 +179,7 @@ accuracies.mean()
 accuracies.std()
 
 
-#the cross validation accuracy is 99.93%, so we choose the decision tree classifier.
+#the cross validation accuracy is 99.92%, so we choose the decision tree classifier.
 
 # Saving model to disk
 pickle.dump(clf, open('credit_card_fraud.pkl','wb'))
