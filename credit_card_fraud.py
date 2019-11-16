@@ -4,9 +4,9 @@ Created on Sat Nov  2 17:38:16 2019
 
 @author: ASUS
 """
-#import os
+import os
 #os.getcwd()
-#os.chdir('D:/')
+os.chdir('D:/')
 
 import pandas as pd
 import numpy as np
@@ -28,6 +28,22 @@ df.shape
 
 df.isnull().sum()
 
+# checking the correlation between the variables (independent and dependent)
+
+plt.figure(figsize=(14,12))
+sns.heatmap(df.corr(),linewidths=.1,cmap="YlGnBu", annot=True)
+plt.yticks(rotation=0);
+
+# dropping the 'Amount' field as it is correlated with many variables
+
+df = df.drop('Amount', axis = 1)
+
+# checking the correlation between the variables after removing 'Amount'
+
+plt.figure(figsize=(14,12))
+sns.heatmap(df.corr(),linewidths=.1,cmap="YlGnBu", annot=True)
+plt.yticks(rotation=0);
+
 #splitting dataset into train and test
 
 X = df.drop('Class', axis = 1)
@@ -35,6 +51,28 @@ Y = df['Class']
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.25, random_state = 0)
+
+#importing required function
+from sklearn.ensemble import ExtraTreesClassifier
+
+#building model
+model = ExtraTreesClassifier()
+model.fit(X_train, Y_train)
+
+#printing out the importance scores
+print(model.feature_importances_)
+
+#creating series for better visualization
+feat_importances = pd.Series(model.feature_importances_, index = X_train.columns)
+
+#plotting graph of feature importances for better visualization
+feat_importances.nlargest(10).plot(kind='barh')   #top 10 features
+plt.show()
+
+#printing feat_importances to get another idea
+print(feat_importances)
+
+#feat_importances[feat_importances < 0.05]
 
 #checking for imbalanced class in the dataset
 
@@ -44,6 +82,7 @@ for p in ax.patches:
     ax.annotate(format(p.get_height()), (p.get_x() + p.get_width() / 2., p.get_height()), ha = 'center', va = 'center', xytext = (0, 10), textcoords = 'offset points');
 
 df['Class'].value_counts()
+
 
 #checking the count of the fraud and non fraud cases
 
@@ -77,15 +116,12 @@ print("After OverSampling, counts of label '1': ", (sum(traintarget_smoted == 1)
 
 #naming the columns of the smoted data
 
-train_smoted_df = pd.DataFrame(train_smoted, columns = X_train.columns)
+train_smoted_df = pd.DataFrame(train_smoted, columns = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11','V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21','V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28'])
 print(train_smoted_df.head())
 train_target_cols = []
-train_target_cols.append(df.columns[29])
+train_target_cols.append(df.columns[28])
 traintarget_smoted_df = pd.DataFrame(traintarget_smoted, columns = train_target_cols)
 print(traintarget_smoted_df.head())
-
-#checking the balance of the dataset
-
 
 
 #checking outliers
@@ -111,34 +147,14 @@ histo(train_smoted_df['V5'])
 anova = stats.f_oneway(X_train[traintarget_smoted_df['Class'] == 0], X_train[traintarget_smoted_df['Class'] == 1])
 anova
 
-#importing required function
-from sklearn.ensemble import ExtraTreesClassifier
-
-#building model
-model = ExtraTreesClassifier()
-model.fit(train_smoted_df,traintarget_smoted_df)
-
-#printing out the importance scores
-print(model.feature_importances_)
-
-#creating series for better visualization
-feat_importances = pd.Series(model.feature_importances_, index=train_smoted_df.columns)
-
-#plotting graph of feature importances for better visualization
-feat_importances.nlargest(10).plot(kind='barh')   #top 10 features
-plt.show()
-
-#printing feat_importances to get another idea
-print(feat_importances)
-
-#Feature scaling the smotted train and test datasets
-
-from sklearn.preprocessing import StandardScaler
-sc_X = StandardScaler()
-train_smoted_df = sc_X.fit_transform(train_smoted_df)
-X_test = sc_X.transform(X_test)
-X_train = sc_X.fit_transform(X_train)
-       
+##Feature scaling the smotted train and test datasets
+#
+#from sklearn.preprocessing import StandardScaler
+#sc_X = StandardScaler()
+#train_smoted_df = sc_X.fit_transform(train_smoted_df)
+#X_test = sc_X.transform(X_test)
+#X_train = sc_X.fit_transform(X_train)
+#       
 
 #fitting the data into a classification algorithm
 from sklearn.naive_bayes import GaussianNB
@@ -155,6 +171,12 @@ from sklearn.tree import DecisionTreeClassifier
 clf = DecisionTreeClassifier()
 
 clf = clf.fit(train_smoted_df, traintarget_smoted_df)
+
+#converting X_test,X_train into dataframe
+
+X_test = pd.DataFrame(X_test, columns = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11','V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21','V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28'])
+X_train = pd.DataFrame(X_train, columns = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11','V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21','V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28'])
+
 
 #predicting results
 
@@ -178,8 +200,7 @@ accuracies = cross_val_score(estimator = clf, X = X_train, y = Y_train, cv = 10)
 accuracies.mean()
 accuracies.std()
 
-
-#the cross validation accuracy is 99.92%, so we choose the decision tree classifier.
+#the cross validation accuracy is 99.91%, so we choose the decision tree classifier.
 
 # Saving model to disk
 pickle.dump(clf, open('credit_card_fraud.pkl','wb'))
